@@ -87,7 +87,7 @@ def get_user_disable_user_current(user: User = Depends(get_user_current)):
 def root():
     return "HI i am a fastapi"
 
-@app.get("/users/me")
+@app.get("/andina/me")
 def user(user: User = Depends(get_user_disable_user_current)):
     return user
 
