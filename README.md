@@ -18,6 +18,8 @@ Proyecto base con FastAPI para levantar una API localmente.
   source venv/bin/activate
    ```
 
+1.2 Si es windows se ejecuta con conda
+
 
 2. Crea y activa el entorno virtual:
    ```bash
