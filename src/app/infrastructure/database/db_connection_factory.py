@@ -1,4 +1,4 @@
-from psycopg2 import  pool
+from mysql.connector import pooling
 
 
 ##SE VA A USAR FACTORY PARA GESTIONAR DE MANERA EFICIENTE LAS CONEXIONES
@@ -11,28 +11,29 @@ class DatabaseConectionFactory:
     _connection_pool = None
 
     @classmethod
-    def initialize (cls , minconn:int = 1, maxconn:int = 5 ):
+    def initialize(cls, minconn: int = 1, maxconn: int = 5):
         if cls._connection_pool is None:
-            cls._connection_pool = pool.SimpleConnectionPool(
-                minconn,maxconn,
-                user= "postgress",
-                password = "1234",
-                host = "localhost",
-                port= "5432",
-                database = "postgres"
+            cls._connection_pool = pooling.MySQLConnectionPool(
+                pool_name="mypool",
+                pool_size=maxconn,
+                user="root",
+                password="1234",  # cambia si tu contenedor usa otra
+                host="localhost",
+                port=3306,
+                database="andina_trading",  # <- reemplaza con el nombre real
             )
 
     ##responsabilidad del programador liberar la conexion despues de ser usada para su reutiliacion
     @classmethod
     def get_connection(cls):
-        if cls._connection_pool is None:
-            raise Exception("Pool connection not initialized")
-        return cls._connection_pool.getconn()
+      if cls._connection_pool is None:
+        raise Exception("Pool connection not initialized")
+      return cls._connection_pool.get_connection()
 
     ##metodo para liberar el pool de conection
     @classmethod
     def release_connection(cls , connection):
-        cls._connection_pool.putconn(connection)
+        connection.close()
 
     ## Este metodo se levanta cuando se hace un reinicio de la app de FastApi
     @classmethod
