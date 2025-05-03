@@ -1,4 +1,4 @@
-from src.app.domain.repositories.user_repository import UserRepository
+from src.app.domain.repositories.crud_repository import CrudRepository
 from src.app.domain.entities.user import User
 from typing import Optional
 from datetime import datetime, timedelta
@@ -14,7 +14,7 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 class UserService:
 
-    def __init__(self, user_repository: UserRepository):
+    def __init__(self, user_repository: CrudRepository):
         self.user_repository = user_repository  # Aquí debe ser 'user_repository'
 
     def get_all(self) -> list[User]:
