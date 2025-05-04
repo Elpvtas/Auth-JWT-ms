@@ -1,10 +1,12 @@
-from dataclasses import Field
 from typing import Optional
-
+from datetime import datetime
 from pydantic import BaseModel
 
-
 class Company(BaseModel):
-  id:int = Field(..., description ="Company Id")
-  name_company = str
-  business_sector = Optional[str] = None
+    id: Optional[int]
+    nombre: str
+    descripcion: Optional[str]
+    sector_economico_id: Optional[int]
+    created_at: Optional[datetime] = None
+    update_at: Optional[datetime] = None
+    deleted_at: Optional[datetime] = None
