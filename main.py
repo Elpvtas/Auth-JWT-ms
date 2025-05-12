@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Depends, HTTPException
-
+from starlette.middleware.cors import CORSMiddleware
+from fastapi.middleware.cors import CORSMiddleware
 from src.app.infrastructure.routers.company_router import router as company_router
 from src.app.infrastructure.routers.user_router import router as user_router
 from src.app.infrastructure.routers.action_router import router as action_router
@@ -10,6 +11,19 @@ from src.app.infrastructure.database.db_connection_factory import DatabaseConect
 
 
 app = FastAPI(title="Andina Trading Backend")
+
+origins = [
+    "http://localhost:4200",  # Frontend Angular
+    # Agrega más orígenes si es necesario
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,  # Permitir solicitudes desde Angular
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.on_event("startup")

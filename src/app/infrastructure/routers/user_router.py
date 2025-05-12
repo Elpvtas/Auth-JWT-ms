@@ -89,8 +89,7 @@ def get_user_by_id(
 @router.post("/", response_model=User, status_code=201, summary="Create new user")
 def create_user(
     user: User = Body(..., description="User to create"),
-    service: UserService = Depends(get_user_service),
-    current_user: User = Depends(get_current_user)
+    service: UserService = Depends(get_user_service)
 ):
     return service.create(user)
 
